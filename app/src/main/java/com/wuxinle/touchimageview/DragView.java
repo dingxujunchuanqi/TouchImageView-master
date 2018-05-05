@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.wuxinle.touchimageview.utils.ScreenUtil;
-
 /**
  * Created by dingxujun on 2018/4/27.
  *
@@ -52,6 +50,8 @@ public class DragView extends ImageView {
                 moveY = event.getY();
                 DownX = event.getRawX();
                 DownY = event.getRawY() - 25;
+                System.out.println("--------------DownX-------"+DownX+"pp"+DownY);
+
                 setPressed(true);
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -59,11 +59,11 @@ public class DragView extends ImageView {
                         && event.getRawY() > 50 && event.getRawY() < (ScreenUtil.getInstance(context).getScreenHeight() - 100)) {
                     setX(getX() + (event.getX() - moveX));
                     setY(getY() + (event.getY() - moveY));
-
                 } else {
                     setX((ScreenUtil.getInstance(context).getScreenWidth()) - getMeasuredWidth() - 20);
-                    setY((ScreenUtil.getInstance(context).getScreenHeight()) / 2);
+                    setY(ScreenUtil.getInstance(context).getScreenHeight()/2);
                 }
+                getParent().requestDisallowInterceptTouchEvent(true);//请求父view别拦截我的事件
                 break;
             case MotionEvent.ACTION_UP:
                 setPressed(false);
@@ -71,6 +71,7 @@ public class DragView extends ImageView {
                 UpY = event.getRawY() - 25;
                 if (Math.abs(UpX - DownX) > 10 || Math.abs(UpY - DownY) > 10) {
                     //处理滑动事件
+                    getParent().requestDisallowInterceptTouchEvent(false);//把事件还给父view
                     Toast.makeText(context, "滑动", 0).show();
                 } else {
                     //处理点击事件
