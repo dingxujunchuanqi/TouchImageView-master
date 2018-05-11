@@ -1,6 +1,7 @@
 package com.wuxinle.touchimageview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainActivity extends Activity implements DragView.DragViewOnclickLi
 //        measure2();
         measure4();
     }
+
+
 
     private void measure2() {//比如一张图片，测量的是实际图片的高度,不管你有没有在布局文件中固定宽高
         //手动调用测量方法。
@@ -60,6 +63,15 @@ public class MainActivity extends Activity implements DragView.DragViewOnclickLi
     @Override
     public void dragViewOnClick() {
         Toast.makeText(this, "点击我了", 0).show();
+    }
+
+
+    /**
+     * 随手滑动的demo
+     */
+    public  void clickDragview(View view){
+        Intent intent =new Intent(this,DragViewActivity.class);
+        startActivity(intent);
     }
 }
 
